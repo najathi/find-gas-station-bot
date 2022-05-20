@@ -1,6 +1,8 @@
 import React from 'react'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Table, Nav, NavLink } from 'react-bootstrap'
+
 import '../../App.css'
-import { Table } from 'react-bootstrap'
 
 const Link = () => {
   return (
@@ -9,7 +11,7 @@ const Link = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Useful Link</th>
+            <th>Useful Links</th>
           </tr>
         </thead>
         <tbody>
@@ -17,11 +19,10 @@ const Link = () => {
             <td>1</td>
             <td>
               <a
-                style={{ textDecoration: 'none' }}
-                href="http://www.rmc.gov.in/rmcwebsite/tax_bill_receipt_new.aspx"
+                href="https://ceypetco.gov.lk/marketing-sales/"
                 target="_blank"
-              >
-                Property Tax Bills/Receipt
+                className="mr-3 cursor-pointer">
+                <i className="fas fa-question-circle"></i> CEYPETCO
               </a>
             </td>
           </tr>
@@ -29,47 +30,10 @@ const Link = () => {
             <td>2</td>
             <td>
               <a
-                style={{ textDecoration: 'none' }}
-                href="http://www.rmc.gov.in/rmcwebsite/birth_death_certificate.aspx"
+                href="https://www.lankaioc.com/price-list/"
                 target="_blank"
-              >
-                Birth & Death
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>
-              <a
-                style={{ textDecoration: 'none' }}
-                href="http://www.rmc.gov.in/rmcwebsite/tax_new.aspx"
-                target="_blank"
-              >
-                Property Tax
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>
-              <a
-                style={{ textDecoration: 'none' }}
-                href="http://www.rmc.gov.in/rmcwebsite/frm_sports_member_master.aspx"
-                target="_blank"
-              >
-                Sports Registration
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>
-              <a
-                style={{ textDecoration: 'none' }}
-                href="http://www.rmc.gov.in/rmcwebsite/onlineservice.aspx"
-                target="_blank"
-              >
-                Online Services
+                className="mr-3 cursor-pointer">
+                <i className="fas fa-question-circle"></i> LANKA IOC
               </a>
             </td>
           </tr>

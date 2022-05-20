@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import ChatBot from 'react-simple-chatbot'
 import { ThemeProvider } from 'styled-components'
 import Post from './Post'
@@ -6,6 +6,7 @@ import Link from './Link'
 import '../../App.css'
 import FuelPrice from './FuelPrice'
 import Locations from './Locations'
+
 const theme = {
   background: '#f5f8fb',
   fontFamily: 'Heebo',
@@ -29,6 +30,7 @@ const config = {
 
 const Chatbot = (props) => {
   let [showChat, setShowChat] = useState(false)
+  let [idistrict, setIDistrict] = useState("")
 
   const startChat = () => {
     setShowChat(true)
@@ -37,7 +39,7 @@ const Chatbot = (props) => {
     setShowChat(false)
   }
 
-  return (
+  return useMemo(() => (
     <ThemeProvider theme={theme}>
       <div style={{ display: showChat ? 'none' : '' }}>
         <ChatBot
@@ -69,10 +71,10 @@ const Chatbot = (props) => {
                   return 'Please input alphabet characters only.'
                 }
               },
-              trigger: 'rmcbot',
+              trigger: 'gasbot',
             },
             {
-              id: 'rmcbot',
+              id: 'gasbot',
               message:
                 'Hi, {previousValue} I am Gas Station Finder Bot! What can I do for you?',
               trigger: 'qtype',
@@ -81,8 +83,8 @@ const Chatbot = (props) => {
               id: 'qtype',
               options: [
                 { value: 1, label: 'Get Price ?', trigger: 'type-of-gas-station-msg' },
-                { value: 2, label: 'Find out fuel available station ?', trigger: '3' },
-                { value: 3, label: 'Find out fuel available station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
+                // { value: 2, label: 'Find out available fuel station ?', trigger: 'q-district' },
+                { value: 3, label: 'Find out available fuel station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
                 { value: 4, label: 'More Information', trigger: '6' },
               ],
             },
@@ -111,25 +113,36 @@ const Chatbot = (props) => {
             },
             {
               id: 'gas-station-batticaloa',
-              component: <Locations />,
+              component: <Locations district="batticaloa" name="sample" />,
               trigger: 'qtype',
             },
             {
-              id: '3',
-              message:
-                'Profession tax is the tax levied and collected by the state governments in India.',
-              trigger: 'qtype',
+              id: 'q-district',
+              message: 'Enter the district name?',
+              trigger: 'district-name-input',
             },
             {
-              id: '4',
-              message:
-                'A property tax or millage rate is an ad valorem tax on the value of a property.',
-              trigger: 'qtype',
+              id: 'district-name-input',
+              user: true,
+              validator: (value) => {
+                if (/^[A-Za-z ]+$/.test(value)) {
+                  return true
+                } else {
+                  return 'Please input alphabet characters only.'
+                }
+              },
+              trigger: 'district-name-state',
             },
             {
-              id: '5',
-              message:
-                'An election is a way people can choose their candidate or their preferences in a representative democracy or other form of government',
+              id: 'district-name-state',
+              message: ({ previousValue, steps }) => {
+                setIDistrict(previousValue)
+              },
+              trigger: 'district-name-find-fuel',
+            },
+            {
+              id: 'district-name-find-fuel',
+              component: <Locations district={idistrict} />,
               trigger: 'qtype',
             },
             {
@@ -145,17 +158,8 @@ const Chatbot = (props) => {
             {
               id: 'submit',
               options: [
-                { value: 'y', label: 'Yes', trigger: 'no-submit' },
+                { value: 'y', label: 'Yes', trigger: 'qtype' },
                 { value: 'n', label: 'No', trigger: 'end-message' },
-              ],
-            },
-            {
-              id: 'no-submit',
-              options: [
-                { value: 1, label: 'Property Tax ?', trigger: '4' },
-                { value: 2, label: ' Professional Tax ?', trigger: '3' },
-                { value: 3, label: 'Election Department', trigger: '5' },
-                { value: 4, label: 'More Information', trigger: '6' },
               ],
             },
             {
@@ -180,7 +184,7 @@ const Chatbot = (props) => {
         )}
       </div>
     </ThemeProvider>
-  )
+  ), [idistrict, setIDistrict])
 }
 
 export default Chatbot

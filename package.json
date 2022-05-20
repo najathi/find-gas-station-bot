@@ -1,9 +1,8 @@
 {
-  "name": "chat-boat",
+  "name": "gas-station-bot",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.3.13",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -28,7 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +49,10 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }

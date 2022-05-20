@@ -17,16 +17,18 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ml-auto">
-                <LinkContainer to="/faq">
-                  <Nav.Link>
-                    <i className="fas fa-question-circle"></i> FAQ
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/help">
-                  <Nav.Link>
-                    <i className="fas fa-hands-helping"></i> Help
-                  </Nav.Link>
-                </LinkContainer>
+                <a
+                  href="https://ceypetco.gov.lk/marketing-sales/"
+                  target="_blank"
+                  className="mr-3 cursor-pointer">
+                  <i className="fas fa-question-circle"></i> CEYPETCO
+                </a>
+                <a
+                  href="https://www.lankaioc.com/price-list/"
+                  target="_blank"
+                  className="mr-3 cursor-pointer">
+                  <i className="fas fa-question-circle"></i> LANKA IOC
+                </a>
               </Nav>
             </Navbar.Collapse>
           </Container>

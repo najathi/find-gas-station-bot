@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../App.css'
 import { Table } from 'react-bootstrap'
+import priceApi from '../../apis/priceApi'
 
 const currency = "LKR"
 
@@ -8,73 +9,24 @@ const FuelPrice = (props) => {
 
   const { name, type, desc } = props;
 
-  let rows = [
-    {
-      id: 1,
-      title: "Lanka Petrol 92 Octane",
-      amount: 338
-    },
-    {
-      id: 2,
-      title: "Lanka Petrol 95 Octane Euro 4",
-      amount: 373
-    },
-    {
-      id: 3,
-      title: "Lanka Auto Diesel",
-      amount: 289
-    },
-    {
-      id: 4,
-      title: "Lanka Super Diesel 4 Star Euro 4",
-      amount: 329
-    },
-    {
-      id: 5,
-      title: "Lanka Kerosene",
-      amount: 87
-    },
-    {
-      id: 6,
-      title: "Lanka Industrial Kerosene",
-      amount: 160
-    }
-  ]
+  const [price, setPrice] = useState();
 
-  if (type === "lankaioc") {
-    rows = [
-      {
-        id: 1,
-        title: "Petrol 92 Octane",
-        amount: 338
-      },
-      {
-        id: 2,
-        title: "Lanka Petrol 92 Octane",
-        amount: 367
-      },
-      {
-        id: 3,
-        title: "Lanka Petrol 92 Octane",
-        amount: 347
-      },
-      {
-        id: 4,
-        title: "Lanka Petrol 92 Octane",
-        amount: 289
-      },
-      {
-        id: 4,
-        title: "Lanka Petrol 92 Octane",
-        amount: 327
-      }
-    ]
-  }
+  useEffect(() => {
+
+    priceApi.getPrice(type)
+      .then(response => {
+        setPrice(response.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }, []);
 
   return (
     <div>
 
-      <h3 className='h4 text-dark'>{name + " - " + (desc? desc.toUpperCase() : type.toUpperCase())}</h3>
+      <h3 className='h4 text-dark'>{name + " - " + (desc ? desc.toUpperCase() : type.toUpperCase())}</h3>
 
       <Table striped bordered hover variant="dark">
         <thead>
@@ -83,16 +35,18 @@ const FuelPrice = (props) => {
             <th>Amount (LKR)</th>
           </tr>
         </thead>
-        <tbody>
-          {rows.map((item, idx) =>
-            <tr key={idx}>
-              <td>{item.title}</td>
-              <td>
-                {`${currency}. ${item.amount.toFixed(2)}`}
-              </td>
-            </tr>
-          )}
-        </tbody>
+        {price && price.length > 0 &&
+          <tbody>
+            {price.map((item) =>
+              <tr key={item._id}>
+                <td>{item.name}</td>
+                <td>
+                  {`${currency}. ${item.amount}.00`}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        }
       </Table>
     </div>
   )

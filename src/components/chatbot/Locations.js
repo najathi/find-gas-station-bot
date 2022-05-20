@@ -2,26 +2,32 @@ import React, { useLayoutEffect, useState } from 'react'
 
 import '../../App.css'
 
-import PlacesApi from '../../apis/places'
+import PlacesApi from '../../apis/placesApi'
 import LocationItem from './LocationItem'
+import { pDistrict } from '../../data/district'
 
 const Locations = (props) => {
 
-  let { district } = props
+  const { district } = props;
 
-  if (!district)
-    district = "batticaloa"
+  console.log('district', district);
+  console.log('props', props);
+
+  if (!(pDistrict.indexOf(district) > -1)) {
+    return (
+      <>
+        <h5 className='text-danger'>Please input the valid district name!</h5>
+      </>
+    );
+  }
 
   const [places, setPlaces] = useState([]);
 
   useLayoutEffect(() => {
 
-    console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)
-
     PlacesApi.getPlaces(district)
       .then(response => {
-        console.log(response)
-        setPlaces(response)
+        setPlaces(response.data)
       })
       .catch(err => {
         console.log(err)

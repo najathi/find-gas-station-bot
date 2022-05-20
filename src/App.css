@@ -38,3 +38,7 @@ a {
   height: 200px;
   width: 300px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
