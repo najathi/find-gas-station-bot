@@ -10,8 +10,6 @@ const Locations = (props) => {
 
   const { district } = props;
 
-  console.log('district', district);
-
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {

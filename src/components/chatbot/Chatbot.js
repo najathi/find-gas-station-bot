@@ -34,7 +34,6 @@ const config = {
 
 const Chatbot = (props) => {
   let [showChat, setShowChat] = useState(false)
-  let [iDistrict, setIDistrict] = useState('')
 
   const startChat = () => {
     setShowChat(true)
@@ -154,7 +153,6 @@ const Chatbot = (props) => {
                 if (!(pDistrict.indexOf(input.value) > -1))
                   return "district-name-find-fuel-in-wrong-input"
 
-                setIDistrict(input.value)
                 return "district-name-find-fuel-in" + input.value
               }
             },
