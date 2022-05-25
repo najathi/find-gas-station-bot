@@ -23,9 +23,11 @@
   text-align: center;
   box-shadow: 2px 2px 3px #999;
 }
+
 .btn:hover {
   opacity: 0.9;
 }
+
 .btn:focus {
   outline: none;
 }
@@ -41,4 +43,18 @@ a {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.rsc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #EF6C00;
+  padding: .3rem .6rem;
+}
+
+.rsc-header-title {
+  margin-bottom: 0;
+  font-family: 'Heebo';
+  font-size: 1.2rem;
 }

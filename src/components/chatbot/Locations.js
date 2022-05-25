@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import '../../App.css'
 
@@ -11,19 +11,10 @@ const Locations = (props) => {
   const { district } = props;
 
   console.log('district', district);
-  console.log('props', props);
-
-  if (!(pDistrict.indexOf(district) > -1)) {
-    return (
-      <>
-        <h5 className='text-danger'>Please input the valid district name!</h5>
-      </>
-    );
-  }
 
   const [places, setPlaces] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     PlacesApi.getPlaces(district)
       .then(response => {
@@ -33,21 +24,27 @@ const Locations = (props) => {
         console.log(err)
       })
 
-  }, []);
+  }, [district]);
 
   return (
     <div>
-      {places && places.length > 0 &&
+      {pDistrict.indexOf(district) > -1 ?
         <>
-          {places.map((item, idx) => (
-            <LocationItem
-              key={idx}
-              name={item.name}
-              formatted_address={item.formatted_address}
-              place_id={item.place_id}
-            />
-          ))}
+          {places && places.length > 0 &&
+            <>
+              {places.map((item, idx) => (
+                <LocationItem
+                  key={idx}
+                  name={item.name}
+                  formatted_address={item.formatted_address}
+                  place_id={item.place_id}
+                />
+              ))}
+            </>
+          }
         </>
+        :
+        <h5 className='text-danger'>Please input the valid district name!</h5>
       }
     </div>
   )

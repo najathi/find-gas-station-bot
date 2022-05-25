@@ -26,6 +26,7 @@ h2 {
 .carousel-item.active {
   display: flex;
 }
+
 .carousel-caption {
   position: absolute;
   top: 0;
@@ -43,9 +44,11 @@ h2 {
   margin-right: auto;
   box-shadow: 0 9px 33px rgba(0, 0, 0, 0.07);
 }
+
 .carousel a {
   margin: 0 auto;
 }
+
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;

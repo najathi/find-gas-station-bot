@@ -1,11 +1,14 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import ChatBot from 'react-simple-chatbot'
 import { ThemeProvider } from 'styled-components'
+
 import Post from './Post'
-import Link from './Link'
-import '../../App.css'
 import FuelPrice from './FuelPrice'
+import Link from './Link'
 import Locations from './Locations'
+import { pDistrict } from '../../data/district'
+
+import '../../App.css'
 
 const theme = {
   background: '#f5f8fb',
@@ -24,13 +27,14 @@ const config = {
   width: '800px',
   height: '700px',
   hideUserAvatar: true,
-  placeholder: 'Type your response.',
+  placeholder: 'Type the message...',
   headerTitle: 'Gas Station Bot',
+  bubbleOptionStyle: { backgroundColor: "white", color: "black", borderColor: "#EF6C00", borderWidth: '1px', borderStyle: 'solid' }
 }
 
 const Chatbot = (props) => {
   let [showChat, setShowChat] = useState(false)
-  let [idistrict, setIDistrict] = useState("")
+  let [iDistrict, setIDistrict] = useState('')
 
   const startChat = () => {
     setShowChat(true)
@@ -39,7 +43,19 @@ const Chatbot = (props) => {
     setShowChat(false)
   }
 
-  return useMemo(() => (
+  const districtArr = pDistrict.map((item) => ({
+    id: 'district-name-find-fuel-in' + item,
+    component: <Locations district={item} />,
+    trigger: 'qtype',
+  }));
+
+  districtArr.push({
+    id: 'district-name-find-fuel-in-wrong-input',
+    component: <Locations district="wrong-input" />,
+    trigger: 'qtype',
+  });
+
+  return (
     <ThemeProvider theme={theme}>
       <div style={{ display: showChat ? 'none' : '' }}>
         <ChatBot
@@ -83,9 +99,10 @@ const Chatbot = (props) => {
               id: 'qtype',
               options: [
                 { value: 1, label: 'Get Price ?', trigger: 'type-of-gas-station-msg' },
-                // { value: 2, label: 'Find out available fuel station ?', trigger: 'q-district' },
+                { value: 2, label: 'Find out available fuel station ?', trigger: 'q-district' },
                 { value: 3, label: 'Find out available fuel station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
                 { value: 4, label: 'More Information', trigger: '6' },
+                { value: 5, label: "Who are you?", trigger: "BOT/introduce-self" }
               ],
             },
             {
@@ -113,7 +130,7 @@ const Chatbot = (props) => {
             },
             {
               id: 'gas-station-batticaloa',
-              component: <Locations district="batticaloa" name="sample" />,
+              component: <Locations district="batticaloa" />,
               trigger: 'qtype',
             },
             {
@@ -125,25 +142,32 @@ const Chatbot = (props) => {
               id: 'district-name-input',
               user: true,
               validator: (value) => {
-                if (/^[A-Za-z ]+$/.test(value)) {
-                  return true
-                } else {
+
+                if (!(/^[A-Za-z ]+$/.test(value)))
                   return 'Please input alphabet characters only.'
-                }
+
+                return true;
+
               },
-              trigger: 'district-name-state',
+              trigger: (input) => {
+
+                if (!(pDistrict.indexOf(input.value) > -1))
+                  return "district-name-find-fuel-in-wrong-input"
+
+                setIDistrict(input.value)
+                return "district-name-find-fuel-in" + input.value
+              }
+            },
+            ...districtArr,
+            {
+              id: "BOT/introduce-self",
+              message: "I'm find petrol station chatbot. You Can find available petrol station very easily.",
+              trigger: "BOT/introduce-self-return"
             },
             {
-              id: 'district-name-state',
-              message: ({ previousValue, steps }) => {
-                setIDistrict(previousValue)
-              },
-              trigger: 'district-name-find-fuel',
-            },
-            {
-              id: 'district-name-find-fuel',
-              component: <Locations district={idistrict} />,
-              trigger: 'qtype',
+              id: "BOT/introduce-self-return",
+              message: "Select an option?",
+              trigger: "qtype"
             },
             {
               id: '6',
@@ -184,7 +208,7 @@ const Chatbot = (props) => {
         )}
       </div>
     </ThemeProvider>
-  ), [idistrict, setIDistrict])
+  )
 }
 
 export default Chatbot
