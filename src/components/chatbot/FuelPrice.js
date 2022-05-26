@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import '../../App.css'
 import { Table } from 'react-bootstrap'
+
+import '../../App.css'
+
 import priceApi from '../../apis/priceApi'
 
 const currency = "LKR"
@@ -9,10 +11,9 @@ const FuelPrice = (props) => {
 
   const { name, type, desc } = props;
 
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState()
 
   useEffect(() => {
-
     priceApi.getPrice(type)
       .then(response => {
         setPrice(response.data)
@@ -20,14 +21,11 @@ const FuelPrice = (props) => {
       .catch(err => {
         console.log(err)
       })
-
-  }, []);
+  }, [type]);
 
   return (
     <div>
-
       <h3 className='h4 text-dark'>{name + " - " + (desc ? desc.toUpperCase() : type.toUpperCase())}</h3>
-
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>

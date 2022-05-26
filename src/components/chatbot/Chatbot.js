@@ -48,12 +48,6 @@ const Chatbot = (props) => {
     trigger: 'qtype',
   }));
 
-  districtArr.push({
-    id: 'district-name-find-fuel-in-wrong-input',
-    component: <Locations district="wrong-input" />,
-    trigger: 'qtype',
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: showChat ? 'none' : '' }}>
@@ -80,11 +74,10 @@ const Chatbot = (props) => {
               id: 'firstname',
               user: true,
               validator: (value) => {
-                if (/^[A-Za-z ]+$/.test(value)) {
-                  return true
-                } else {
+                if (!(/^[A-Za-z ]+$/.test(value)))
                   return 'Please input alphabet characters only.'
-                }
+
+                return true
               },
               trigger: 'gasbot',
             },
@@ -100,8 +93,8 @@ const Chatbot = (props) => {
                 { value: 1, label: 'Get Price ?', trigger: 'type-of-gas-station-msg' },
                 { value: 2, label: 'Find out available fuel station ?', trigger: 'q-district' },
                 { value: 3, label: 'Find out available fuel station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
+                { value: 5, label: "Who are you?", trigger: "BOT/introduce-self" },
                 { value: 4, label: 'More Information', trigger: '6' },
-                { value: 5, label: "Who are you?", trigger: "BOT/introduce-self" }
               ],
             },
             {
@@ -145,14 +138,13 @@ const Chatbot = (props) => {
                 if (!(/^[A-Za-z ]+$/.test(value)))
                   return 'Please input alphabet characters only.'
 
+                if (!(pDistrict.indexOf(value) > -1))
+                  return 'Please input the valid district name!'
+
                 return true;
 
               },
               trigger: (input) => {
-
-                if (!(pDistrict.indexOf(input.value) > -1))
-                  return "district-name-find-fuel-in-wrong-input"
-
                 return "district-name-find-fuel-in" + input.value
               }
             },
