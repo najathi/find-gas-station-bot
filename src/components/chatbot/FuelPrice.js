@@ -21,7 +21,7 @@ const FuelPrice = (props) => {
       .catch(err => {
         console.log(err)
       })
-  }, [type]);
+  }, []);
 
   return (
     <div>

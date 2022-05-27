@@ -20,7 +20,9 @@ const Locations = (props) => {
       .catch(err => {
         console.log(err)
       })
-  }, [district]);
+  }, []);
+
+  console.log(district)
 
   return (
     <div>

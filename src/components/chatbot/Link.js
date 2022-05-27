@@ -30,7 +30,7 @@ const Link = () => {
             <td>2</td>
             <td>
               <a
-                href="https://www.lankaioc.com/price-list/"
+                href="http://www.adaderana.lk/news/82632/lanka-ioc-also-decides-to-increase-fuel-prices"
                 target="_blank"
                 className="mr-3 cursor-pointer">
                 <i className="fas fa-question-circle"></i> LANKA IOC
