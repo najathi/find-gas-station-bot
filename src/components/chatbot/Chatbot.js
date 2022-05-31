@@ -91,10 +91,10 @@ const Chatbot = (props) => {
               id: 'qtype',
               options: [
                 { value: 1, label: 'Get Price ?', trigger: 'type-of-gas-station-msg' },
-                { value: 2, label: 'Find out available fuel station ?', trigger: 'q-district' },
-                { value: 3, label: 'Find out available fuel station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
-                { value: 5, label: "Who are you?", trigger: "BOT/introduce-self" },
+                { value: 2, label: 'Find out available fuel station in Batticaloa ?', trigger: 'gas-station-batticaloa' },
+                { value: 3, label: 'Find out available fuel station ?', trigger: 'q-district' },
                 { value: 4, label: 'More Information', trigger: '6' },
+                { value: 5, label: "Who are you?", trigger: "BOT/introduce-self" },
               ],
             },
             {
